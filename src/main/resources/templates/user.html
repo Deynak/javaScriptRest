@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="https://w7.pngwing.com/pngs/6/979/png-transparent-spring-framework-computer-icons-spring-web-flow-java-advancement-leaf-logo-grass-thumbnail.png">
+    <title>Admin panel</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<input type="hidden" id="hidden-id" th:value="${currentUser.id}"/>
+
+<nav class="navbar navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-brand">
+            <b><span th:text="${currentUser.username}"></span></b>
+            with roles:
+            <tr th:each="role: ${currentUser.authorities}">
+                <td th:text="${role.authority}"/>
+            </tr>
+        </div>
+        <form class="d-flex" th:action="@{/logout}" method="post">
+            <input class="btn btn-dark text-secondary" type="submit" value="Logout">
+        </form>
+    </div>
+</nav>
+<div class="d-flex align-items-start">
+    <div class="nav flex-column nav-pills col-sm-2 col-md-2 col-lg-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+        <br>
+        <a class="nav-link active" id="v-pills-user-tab" data-bs-toggle="pill" href="#v-pills-user" role="tab" aria-controls="v-pills-user" aria-selected="true">User</a>
+    </div>
+    <div class="tab-content bg-light container-fluid h-100 d-inline-block" id="v-pills-tabContent">
+        <div class="tab-pane fade show active" id="v-pills-user" role="tabpanel" aria-labelledby="v-pills-user-tab">
+            <div class="container-fluid" style="height:1000px">
+                <br>
+                <h1><b>User information-page</b></h1>
+                <div class="card">
+                    <div class="card-header"><h4>About user</h4></div>
+                    <div class="card-body">
+                        <table class="table table-striped">
+                            <thead class="border-top">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Age</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Role</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td id="userId"></td>
+                                <td id="userName"></td>
+                                <td id="userSurname"></td>
+                                <td id="userAge"></td>
+                                <td id="userEmail"></td>
+                                <td id="userRole">
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/static/user.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+</body>
+</html>
