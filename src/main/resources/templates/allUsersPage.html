@@ -391,18 +391,6 @@
                 </select>
               </div>
             </div>
-            <!--                                                        <h5><b>Role</b></h5>-->
-            <!--                                                        <div class="row justify-content-center">-->
-            <!--                                                            <div class="col-6">-->
-            <!--                                                                <div class="form-group">-->
-            <!--                                                                    <select multiple size="2" name="roles" class="form-control">-->
-            <!--                                                                        <option th:each="role: ${allRoles}"-->
-            <!--                                                                        th:value="${role.id}"-->
-            <!--                                                                        th:text="${role.authority}"></option>-->
-            <!--                                                                    </select>-->
-            <!--                                                                </div>-->
-            <!--                                                            </div>-->
-            <!--                                                        </div>-->
           </div>
           <div class="modal-footer">
             <button
@@ -521,21 +509,19 @@
           </div>
           <div class="modal-footer">
             <button
-              type="button"
-              class="btn btn-secondary"
-              data-dismiss="modal"
+                    type="button"
+                    class="btn btn-secondary"
+                    data-dismiss="modal"
             >
               Close
             </button>
-            <form>
-              <button
-                type="submit"
-                id="modalDeleteBtn"
-                class="btn btn-danger"
-              >
-                Delete
-              </button>
-            </form>
+            <button
+                    type="button"
+                    id="modalDeleteBtn"
+                    class="btn btn-danger"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>

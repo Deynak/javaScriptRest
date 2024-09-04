@@ -34,9 +34,6 @@ const userRole = document.querySelector('#userRole')
 
 const navName = document.querySelector('#navName')
 const navRole = document.querySelector('#navRole')
-// const hiddenId = document.querySelector('#hidden-id')
-//
-// console.log(hiddenId.value)
 
 const baseURL = 'http://localhost:8080/api'
 fetch(`${baseURL}/user`).then((res) => res.json()).then((data) => {
@@ -165,18 +162,37 @@ function submitEditUser() {
 }
 
 function deleteUser(el) {
-  deleteId.value = el.id
-  deleteName.value = el.name
-  deleteLastName.value = el.surname
-  deleteAge.value = el.age
-  deleteEmail.value = el.email
-  let deleteSelect = modalDelete.querySelector('#rolesSelect')
-  deleteSelect.value = el.roles[0].id
-  let btnDelete = modalDelete.querySelector('#modalDeleteBtn')
-  btnDelete.onclick = () => {
-    fetch(`${baseURL}/users/${el.id}`, {method : 'DELETE'}).then((res) => res.json() ).then((data) => {
-      console.log(data)
-      getUsers()
-    })
-  }
+  deleteId.value = el.id;
+  deleteName.value = el.name;
+  deleteLastName.value = el.surname;
+  deleteAge.value = el.age;
+  deleteEmail.value = el.email;
+
+  let deleteSelect = modalDelete.querySelector('#rolesSelect');
+  deleteSelect.value = el.roles[0].id;
+
+  modalDelete.querySelector('#modalDeleteBtn').onclick = submitDeleteUser;
+}
+
+function submitDeleteUser() {
+  const userId = deleteId.value;
+
+  fetch(`${baseURL}/users/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json"
+    }
+  })
+      .then(res => {
+        if (res.ok) {
+          getUsers();
+          $("#modalDelete").modal("hide");
+        } else {
+          throw new Error("Failed to delete user");
+        }
+      })
+      .catch(error => {
+        console.error("Произошла ошибка:", error);
+      });
 }
