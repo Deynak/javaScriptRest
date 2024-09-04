@@ -8,16 +8,13 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<input type="hidden" id="hidden-id" th:value="${currentUser.id}"/>
 
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <div class="navbar-brand">
-            <b><span th:text="${currentUser.username}"></span></b>
+            <b><span id="navName"></span></b>
             with roles:
-            <tr th:each="role: ${currentUser.authorities}">
-                <td th:text="${role.authority}"/>
-            </tr>
+            <span id="navRole"></span>
         </div>
         <form class="d-flex" th:action="@{/logout}" method="post">
             <input class="btn btn-dark text-secondary" type="submit" value="Logout">

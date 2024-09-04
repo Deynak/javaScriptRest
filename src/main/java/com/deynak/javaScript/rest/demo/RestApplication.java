@@ -1,4 +1,4 @@
-package com.deynak.javaScript.rest;
+package com.deynak.javaScript.rest.demo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

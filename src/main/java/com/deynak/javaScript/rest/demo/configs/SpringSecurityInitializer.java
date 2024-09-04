@@ -1,4 +1,4 @@
-package com.deynak.javaScript.rest.configs;
+package com.deynak.javaScript.rest.demo.configs;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

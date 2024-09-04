@@ -9,13 +9,15 @@ const userAge = document.querySelector('#userAge')
 const userEmail = document.querySelector('#userEmail')
 const userRole = document.querySelector('#userRole')
 
-const hiddenId = document.querySelector('#hidden-id')
+const navName = document.querySelector('#navName')
+const navRole = document.querySelector('#navRole')
 
-console.log(hiddenId.value)
 
-fetch(`${baseURL}/users/${hiddenId.value}`).then((res) => res.json()).then((data) => {
+fetch(`${baseURL}/user`).then((res) => res.json()).then((data) => {
     console.log(data)
 
+    navName.innerHTML = data.email
+    navRole.innerHTML = data.roles[0].name
     userId.innerHTML = data.id
     userName.innerHTML = data.name
     userSurname.innerHTML = data.surname

@@ -1,15 +1,14 @@
-package com.deynak.javaScript.rest.dao;
+package com.deynak.javaScript.rest.demo.dao;
 
 import org.springframework.stereotype.Repository;
-import com.deynak.javaScript.rest.model.User;
+import com.deynak.javaScript.rest.demo.model.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-public class UserDAOImpl implements UserDAO {
-
+public class UserDAOImpl implements UserDAO{
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -37,6 +36,6 @@ public class UserDAOImpl implements UserDAO {
 
     @Override
     public void deleteUser(int id) {
-        entityManager.createQuery("delete from User where id =:userId").setParameter("userId", id).executeUpdate();
+        entityManager.createQuery("delete from User where id =:userId").setParameter("userId",id).executeUpdate();
     }
 }
