@@ -34,6 +34,7 @@ const userRole = document.querySelector('#userRole')
 
 const navName = document.querySelector('#navName')
 const navRole = document.querySelector('#navRole')
+const usersTableTabLink = document.querySelector('#usersTableTabLink')
 
 const baseURL = 'http://localhost:8080/api'
 fetch(`${baseURL}/user`).then((res) => res.json()).then((data) => {
@@ -72,11 +73,11 @@ function addUser(event) {
     headers : {Accept: "application/json",
       "Content-Type": "application/json", },
     body : JSON.stringify(data)
-  }).then((res) => res.json() ).then((data) => {
-    console.log(data)
-    getUsers()
-
   })
+      .then((res) => {
+        getUsers()
+        usersTableTabLink.click();
+      });
 }
 function getRoles() {
   fetch(`${baseURL}/roles`).then((res) => res.json()).then((data) => {
@@ -127,7 +128,7 @@ function editUser(el) {
   editSurname.value = el.surname
   editAge.value = el.age
   editEmail.value = el.email
-  editPassword.value = el.password
+  // editPassword.value = el.password
 
   editRolesSelect.value = el.roles[0].id
 }
@@ -139,7 +140,7 @@ function submitEditUser() {
     surname : editSurname.value,
     age : editAge.value,
     email : editEmail.value,
-    password : editPassword.value,
+   // password : editPassword.value,
 
   }
   if (editRolesSelect.value == 1) {
