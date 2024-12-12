@@ -11,9 +11,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-
-
-
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.Collection;
@@ -30,7 +27,7 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(name = "password")
     private String password;
     @Column(name = "name")
@@ -50,14 +47,15 @@ public class User implements UserDetails {
     public User() {
     }
     public boolean hasRole(String roleName) {
-        if (null == roles || 0 == roles.size()) {
-            return false;
+        for (Role role : roles) {
+            if (role.getName().equals(roleName)) {
+                return true;
+            }
         }
-        Optional<Role> findRole = roles.stream().filter(role -> roleName.equals(role.getName())).findFirst();
-        return findRole.isPresent();
+        return false;
     }
 
-    public int getAge() {
+    public long getAge() {
         return age;
     }
 
@@ -117,11 +115,11 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

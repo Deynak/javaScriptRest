@@ -4,52 +4,45 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import com.deynak.javaScript.rest.demo.dao.UserDAO;
+import com.deynak.javaScript.rest.demo.dao.UserRepository;
 import com.deynak.javaScript.rest.demo.model.User;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
+
     @Autowired
-    private UserDAO userDAO;
+    private UserRepository userRepository;
+
     @Override
     public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+        return userRepository.findAll();
     }
 
     @Override
     @Transactional
     public void saveUser(User user) {
-        userDAO.saveUser(user);
+        userRepository.save(user);
     }
 
     @Override
-    public User getUser(int id) {
-        return userDAO.getUser(id);
+    public User getUser(long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.orElse(null);
     }
 
     @Override
     @Transactional
-    public void deleteUser(int id) {
-        userDAO.deleteUser(id);
+    public void deleteUser(long id) {
+        userRepository.deleteById(id);
     }
-
-//    @Override
-//    public String getPage(Principal principal, ModelMap modelMap) {
-//        User user = userDAO.getUserByEmail(principal.getName());
-//        modelMap.addAttribute("currentUser", user);
-//        if (user.hasRole("ADMIN")) {
-//            return "allUsersPage";
-//        } else if (user.hasRole("USER")) {
-//            return "user";
-//        }
-//        return "index";
-//    }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userDAO.getUserByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(() ->
+                new UsernameNotFoundException("User not found with email: " + email));
     }
 }
