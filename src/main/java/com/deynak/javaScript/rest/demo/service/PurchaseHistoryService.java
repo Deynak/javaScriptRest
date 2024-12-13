@@ -10,4 +10,6 @@ public interface PurchaseHistoryService {
     public void savePurchaseHistory(PurchaseHistory purchaseHistory);
 
     public List<PurchaseHistory> getPurchaseHistoryForUser(User user);
+
+    public void processPurchase(User user, double productPrice, int quantity);
 }

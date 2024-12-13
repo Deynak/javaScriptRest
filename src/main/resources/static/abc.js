@@ -129,7 +129,10 @@ function editUser(el) {
   editEmail.value = el.email
   editPassword.value = el.password
 
-  editRolesSelect.value = el.roles[0].id
+  // Устанавливаем роль
+  Array.from(editRolesSelect.options).forEach(option => {
+    option.selected = el.roles.some(role => role.id == option.value);
+  });
 }
 modalBtnEdit.onclick = submitEditUser
 function submitEditUser() {

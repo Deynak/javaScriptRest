@@ -1,14 +1,15 @@
 const baseURL = 'http://localhost:8080/api/admin/products';
 const productTable = document.getElementById('productTable');
 const historyTable = document.getElementById('historyTable');
+let userBalanceElement = document.getElementById('userBalance');
 let selectedProduct = null;
 
 // Загрузка продуктов
 function fetchProducts() {
-    fetch(baseURL)
+    fetch('/api/user/products') // Убедитесь, что это правильный маршрут
         .then(response => response.json())
         .then(data => {
-            productTable.innerHTML = '';
+            productTable.innerHTML = ''; // Очистка таблицы перед добавлением данных
             data.forEach(product => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -18,7 +19,7 @@ function fetchProducts() {
                     <td>${product.price}</td>
                     <td>${product.quantity}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm" onclick="showPurchaseModal(${product.id})">Buy</button>
+                        <button class="btn btn-primary btn-sm" onclick="purchaseProduct(${product.id}, 1)">Buy</button>
                     </td>
                 `;
                 productTable.appendChild(row);
@@ -26,6 +27,7 @@ function fetchProducts() {
         })
         .catch(error => console.error("Error fetching products:", error));
 }
+
 
 // Показываем модальное окно покупки
 function showPurchaseModal(productId) {
@@ -70,6 +72,46 @@ document.getElementById('purchaseForm').onsubmit = function (e) {
         })
         .catch(error => console.error("Error processing purchase:", error));
 };
+
+// Загрузка баланса пользователя
+function fetchUserBalance() {
+    fetch('/api/user/balance') // Используйте правильный URL
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            userBalanceElement.innerText = `Balance: $${data.balance.toFixed(2)}`;
+        })
+        .catch(error => console.error("Error fetching user balance:", error));
+}
+
+// Покупка продукта
+function purchaseProduct(productId, quantity) {
+    fetch(`/api/user/purchase?productId=${productId}&quantity=${quantity}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to purchase product');
+            }
+            return response.text();
+        })
+        .then(data => {
+            alert('Purchase successful!');
+            fetchProducts(); // Обновление товаров
+            fetchUserBalance(); // Обновление баланса
+        })
+        .catch(error => {
+            console.error('Error processing purchase:', error);
+            alert(`Purchase failed: ${error.message}`);
+        });
+}
 
 // Добавление записи в историю покупок
 function addToPurchaseHistory(product, quantity) {
@@ -130,5 +172,6 @@ document.getElementById('logoutBtn').onclick = function () {
         .catch(error => console.error("Error logging out:", error));
 };
 
+fetchUserBalance();
 // Начальная загрузка
 fetchProducts();
