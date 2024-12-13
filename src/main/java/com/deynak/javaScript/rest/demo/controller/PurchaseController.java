@@ -36,6 +36,7 @@ public class PurchaseController {
     public ResponseEntity<String> purchaseProduct(@RequestParam Long productId, @RequestParam int quantity, Principal principal) {
         // Получение текущего пользователя
         User user = (User) userService.loadUserByUsername(principal.getName());
+        Double balance = user.getBalance() != null ? user.getBalance() : 0.0;
         Product product = productService.getProductById(productId);
 
         // Проверка доступности товара
@@ -51,17 +52,9 @@ public class PurchaseController {
             return ResponseEntity.badRequest().body("Insufficient funds");
         }
 
-
-        user.setBalance(user.getBalance() - totalCost);
-
-
-
         // Списываем средства
-        System.out.println("User balance before purchase: " + user.getBalance());
         user.setBalance(user.getBalance() - totalCost);
-        System.out.println("User balance after purchase: " + user.getBalance());
         userService.saveUser(user); // Сохранение обновленного баланса
-
 
         // Уменьшаем количество товара
         product.setQuantity(product.getQuantity() - quantity);

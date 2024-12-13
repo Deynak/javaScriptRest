@@ -38,8 +38,8 @@ public class User implements UserDetails {
     private int age;
     @Column(name = "email")
     private String email;
-    @Column(name = "balance")
-    private Double balance;
+    @Column(nullable = false)
+    private Double balance = 0.0;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),

@@ -1,4 +1,4 @@
-package com.deynak.javaScript.rest.demo.repository;
+package com.deynak.javaScript.rest.demo.dao;
 
 import com.deynak.javaScript.rest.demo.model.PurchaseHistory;
 import com.deynak.javaScript.rest.demo.model.User;

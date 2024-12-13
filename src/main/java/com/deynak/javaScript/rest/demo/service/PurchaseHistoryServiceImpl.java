@@ -2,7 +2,7 @@ package com.deynak.javaScript.rest.demo.service;
 
 import com.deynak.javaScript.rest.demo.model.PurchaseHistory;
 import com.deynak.javaScript.rest.demo.model.User;
-import com.deynak.javaScript.rest.demo.repository.PurchaseHistoryRepository;
+import com.deynak.javaScript.rest.demo.dao.PurchaseHistoryRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
