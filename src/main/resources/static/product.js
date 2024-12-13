@@ -108,6 +108,18 @@ function deleteProduct(id) {
     fetch(`${baseURL}/${id}`, {method: 'DELETE'})
         .then(() => fetchProducts());
 }
-
+// Переход в профиль
+document.getElementById('profileBtnn').onclick = function () {
+    window.location.href = '/admin'; // Измените URL на соответствующий
+};
+// Выход из аккаунта
+document.getElementById('logoutBtnn').onclick = function () {
+    fetch('/logout', { method: 'POST' }) // Выполнение запроса на выход
+        .then(() => {
+            alert("Logged out successfully!");
+            window.location.href = '/login'; // Перенаправление на страницу входа
+        })
+        .catch(error => console.error("Error logging out:", error));
+};
 // Initial fetch
 fetchProducts();
