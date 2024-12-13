@@ -32,7 +32,6 @@ public class PurchaseHistory {
         this.purchaseDate = purchaseDate;
     }
 
-    // Getters and setters
     public Long getId() {
         return id;
     }

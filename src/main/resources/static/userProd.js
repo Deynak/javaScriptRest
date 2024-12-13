@@ -4,12 +4,12 @@ const historyTable = document.getElementById('historyTable');
 let userBalanceElement = document.getElementById('userBalance');
 let selectedProduct = null;
 
-// Загрузка продуктов
+
 function fetchProducts() {
-    fetch('/api/user/products') // Убедитесь, что это правильный маршрут
+    fetch('/api/user/products')
         .then(response => response.json())
         .then(data => {
-            productTable.innerHTML = ''; // Очистка таблицы перед добавлением данных
+            productTable.innerHTML = '';
             data.forEach(product => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -29,7 +29,6 @@ function fetchProducts() {
 }
 
 
-// Показываем модальное окно покупки
 function showPurchaseModal(productId) {
     fetch(`${baseURL}/${productId}`)
         .then(response => response.json())
@@ -42,7 +41,6 @@ function showPurchaseModal(productId) {
         .catch(error => console.error("Error fetching product details:", error));
 }
 
-// Обработка покупки
 document.getElementById('purchaseForm').onsubmit = function (e) {
     e.preventDefault();
 
@@ -58,7 +56,6 @@ document.getElementById('purchaseForm').onsubmit = function (e) {
         quantity: selectedProduct.quantity - purchaseQuantity,
     };
 
-    // Обновляем продукт
     fetch(baseURL, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -73,7 +70,6 @@ document.getElementById('purchaseForm').onsubmit = function (e) {
         .catch(error => console.error("Error processing purchase:", error));
 };
 
-// Загрузка баланса пользователя
 function fetchUserBalance() {
     fetch('/api/user/balance') // Используйте правильный URL
         .then(response => {
@@ -88,7 +84,6 @@ function fetchUserBalance() {
         .catch(error => console.error("Error fetching user balance:", error));
 }
 
-// Покупка продукта
 function purchaseProduct(productId, quantity) {
     fetch(`/api/user/purchase?productId=${productId}&quantity=${quantity}`, {
         method: 'POST',
@@ -113,7 +108,6 @@ function purchaseProduct(productId, quantity) {
         });
 }
 
-// Добавление записи в историю покупок
 function addToPurchaseHistory(product, quantity) {
     const purchase = {
         product: { id: product.id },
@@ -135,7 +129,7 @@ function addToPurchaseHistory(product, quantity) {
 }
 
 
-// Открытие истории покупок
+
 document.getElementById('historyBtn').onclick = function () {
     fetch('/api/user/purchase-history')
         .then(response => response.json())
@@ -157,12 +151,12 @@ document.getElementById('historyBtn').onclick = function () {
 };
 
 
-// Переход в профиль
+
 document.getElementById('profileBtn').onclick = function () {
     window.location.href = '/user'; // Измените URL на соответствующий
 };
 
-// Выход из аккаунта
+
 document.getElementById('logoutBtn').onclick = function () {
     fetch('/logout', { method: 'POST' }) // Выполнение запроса на выход
         .then(() => {
@@ -173,5 +167,5 @@ document.getElementById('logoutBtn').onclick = function () {
 };
 
 fetchUserBalance();
-// Начальная загрузка
+
 fetchProducts();

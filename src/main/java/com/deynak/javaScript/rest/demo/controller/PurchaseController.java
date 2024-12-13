@@ -34,33 +34,27 @@ public class PurchaseController {
 
     @PostMapping("/purchase")
     public ResponseEntity<String> purchaseProduct(@RequestParam Long productId, @RequestParam int quantity, Principal principal) {
-        // Получение текущего пользователя
+
         User user = (User) userService.loadUserByUsername(principal.getName());
         Double balance = user.getBalance() != null ? user.getBalance() : 0.0;
         Product product = productService.getProductById(productId);
 
-        // Проверка доступности товара
         if (product.getQuantity() < quantity) {
             return ResponseEntity.badRequest().body("Not enough stock available");
         }
 
-        // Вычисление общей стоимости покупки
         double totalCost = product.getPrice() * quantity;
 
-        // Проверка баланса пользователя
         if (user.getBalance() < totalCost) {
             return ResponseEntity.badRequest().body("Insufficient funds");
         }
 
-        // Списываем средства
         user.setBalance(user.getBalance() - totalCost);
-        userService.saveUser(user); // Сохранение обновленного баланса
+        userService.saveUser(user);
 
-        // Уменьшаем количество товара
         product.setQuantity(product.getQuantity() - quantity);
-        productService.updateProduct(product); // Сохранение обновленного количества товара
+        productService.updateProduct(product);
 
-        // Сохраняем запись о покупке
         PurchaseHistory purchaseHistory = new PurchaseHistory(user, product, quantity, LocalDateTime.now());
         purchaseHistoryService.savePurchaseHistory(purchaseHistory);
 

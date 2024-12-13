@@ -1,7 +1,6 @@
 const baseURL = 'http://localhost:8080/api/admin/products';
 const productTable = document.getElementById('productTable');
 
-// Функция для загрузки и отображения продуктов
 function fetchProducts() {
     fetch(baseURL)
         .then(response => {
@@ -34,9 +33,8 @@ function fetchProducts() {
         });
 }
 
-// Вызов функции для начальной загрузки продуктов
 fetchProducts();
-// Add a new product
+
 document.getElementById('addProductForm').onsubmit = function (e) {
     e.preventDefault();
     const product = {
@@ -57,7 +55,7 @@ document.getElementById('addProductForm').onsubmit = function (e) {
         });
 };
 
-// Show edit modal
+
 function showEditModal(id) {
     fetch(`${baseURL}/${id}`)
         .then(response => {
@@ -81,7 +79,7 @@ function showEditModal(id) {
 }
 
 
-// Edit a product
+
 document.getElementById('editProductForm').onsubmit = function (e) {
     e.preventDefault();
     const product = {
@@ -103,16 +101,16 @@ document.getElementById('editProductForm').onsubmit = function (e) {
         });
 };
 
-// Delete a product
+
 function deleteProduct(id) {
     fetch(`${baseURL}/${id}`, {method: 'DELETE'})
         .then(() => fetchProducts());
 }
-// Переход в профиль
+
 document.getElementById('profileBtnn').onclick = function () {
     window.location.href = '/admin'; // Измените URL на соответствующий
 };
-// Выход из аккаунта
+
 document.getElementById('logoutBtnn').onclick = function () {
     fetch('/logout', { method: 'POST' }) // Выполнение запроса на выход
         .then(() => {
@@ -121,5 +119,5 @@ document.getElementById('logoutBtnn').onclick = function () {
         })
         .catch(error => console.error("Error logging out:", error));
 };
-// Initial fetch
+
 fetchProducts();

@@ -92,6 +92,4 @@ public class Product {
                 ", quantity=" + quantity +
                 '}';
     }
-
-    // Конструкторы, геттеры, сеттеры
 }

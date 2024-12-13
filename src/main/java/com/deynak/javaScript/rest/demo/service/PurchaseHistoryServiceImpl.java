@@ -34,7 +34,6 @@ public class PurchaseHistoryServiceImpl implements PurchaseHistoryService {
             throw new IllegalArgumentException("Insufficient funds");
         }
 
-        // Списываем средства
         user.setBalance(user.getBalance() - totalCost);
         userService.saveUser(user);
     }
